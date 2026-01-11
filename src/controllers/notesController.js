@@ -1,4 +1,4 @@
-const Note = require("../models/Note");
+const Note = require("../models/note");
 
 // CREATE NOTE
 exports.createNote = async (req, res) => {
