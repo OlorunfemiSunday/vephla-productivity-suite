@@ -1,182 +1,164 @@
-# Vephla Productivity Suite -- Backend API
 
-This project is a Node.js + Express-based backend API providing user
-authentication, real-time socket communication, file upload handling,
-and RESTful endpoints. It is built following MVC folder structure for
-scalability and easy maintenance.
+# Vephla Productivity Suite – Backend API
 
-------------------------------------------------------------------------
+A powerful backend system built using **Node.js**, **Express**, **MongoDB**, and **Socket.io**, designed to support productivity tools such as notes, tasks, real-time messaging, and file uploads.  
+The project follows a clean, modular **MVC architecture** for scalability and maintainability.
 
-## 🚀 Features
+---
 
--   User Authentication (Signup & Login)
--   JWT-based Authorization
--   File Upload using Multer
--   Real-time communication using Socket.io
--   REST API endpoints for Notes management
--   Modular folder structure
--   Environment variable protection via `.env` and `.gitignore`
+## 🌟 Features
 
-------------------------------------------------------------------------
+### 🔐 User Authentication & Security
+- User Signup & Login
+- Password hashing with bcryptjs
+- JWT-based authorization
+- Protected routes using middleware
+
+### 📝 Notes Management (CRUD)
+- Create notes
+- Get all notes
+- Get single note by ID
+- Update notes
+- Delete notes
+
+### 📤 File Upload Handling
+- Upload files using Multer
+- Auto-creates upload directory
+- Generates unique filenames
+
+### 🔌 Real-Time Socket.io Support
+- Bi-directional communication
+- Ready for live chat
+- Message broadcasting
+
+---
 
 ## 📁 Folder Structure
 
-    vephla-productivity-suite/
-    │
-    ├── config/
-    │   └── db.js
-    │
-    ├── controllers/
-    │   └── notesController.js
-    │   └── userController.js
-    │
-    ├── middleware/
-    │   └── authMiddleware.js
-    │      │
-    ├── models/
-    │   └── User.js
-    │   └── note.js
-    │
-    ├── routes/
-    │   └── auth.js
-    │   └── authRoutes.js
-    │   └── files.js
-    │   └── notes.js
-    │   └── tasks.js
-    │       │
-    ├── uploads/   # Stores uploaded files
-    │
-    ├── testSocket.js
-    ├── server.js
-    ├── .env
-    ├── .gitignore
-    └── package.json
+```
+vephla-productivity-suite/
+│
+├── config/
+│   └── db.js
+│
+├── controllers/
+│   ├── notesController.js
+│   └── userController.js
+│
+├── middleware/
+│   └── authMiddleware.js
+│
+├── models/
+│   ├── User.js
+│   └── Note.js
+│
+├── routes/
+│   ├── auth.js
+│   ├── authRoutes.js
+│   ├── files.js
+│   ├── notes.js
+│   └── tasks.js
+│
+├── uploads/
+│
+├── testSocket.js
+├── server.js
+├── .env
+├── .gitignore
+└── package.json
+```
 
-------------------------------------------------------------------------
+---
 
-## ⚙️ Installation & Setup
+## ⚙️ Installation
 
-### 1️⃣ Clone the repository
+### 1️⃣ Clone Repo
+```bash
+git clone https://github.com/olorunfemi-sunday/vephla-productivity-suite.git
+cd vephla-productivity-suite
+```
 
-    git clone https://github.com/your-username/vephla-productivity-suite.git
-    cd vephla-productivity-suite
+### 2️⃣ Install Dependencies
+```bash
+npm install
+```
 
-### 2️⃣ Install dependencies
+### 3️⃣ Add Environment Variables
+Create `.env`:
+```
+MONGO_URI=mongodb://127.0.0.1:27017/vephla_productivity_suite
+JWT_SECRET=yourSecretKey123
+PORT=5000
+```
 
-    npm install
+### 4️⃣ Start Server
+```bash
+npm start
+```
 
-### 3️⃣ Create a `.env` file
-
-    PORT=5000
-    MONGO_URI=your_mongo_connection_string
-    JWT_SECRET=your_jwt_secret
-
-### 4️⃣ Start the server
-
-    npm start
-
-------------------------------------------------------------------------
+---
 
 ## 🔌 API Endpoints
 
 ### Auth Routes
+| Method | Endpoint     | Description       |
+|--------|--------------|-------------------|
+| POST   | /api/signup  | Register          |
+| POST   | /api/login   | Login             |
 
-  Method   Endpoint      Description
-  -------- ------------- ---------------
-  POST     /api/signup   Register user
-  POST     /api/login    Login user
+### Notes Routes
+| Method | Endpoint          | Description         |
+|--------|-------------------|---------------------|
+| POST   | /api/notes        | Create note         |
+| GET    | /api/notes        | Get notes           |
+| GET    | /api/notes/:id    | Get note by ID      |
+| PUT    | /api/notes/:id    | Update note         |
+| DELETE | /api/notes/:id    | Delete note         |
 
-### Notes Routes (Protected)
+---
 
-  Method   Endpoint         Description
-  -------- ---------------- ----------------
-  POST     /api/notes       Create a note
-  GET      /api/notes       Get all notes
-  GET      /api/notes/:id   Get note by ID
-  PUT      /api/notes/:id   Update a note
-  DELETE   /api/notes/:id   Delete a note
+## 🧪 Testing Notes CRUD
+Use Postman:
 
-------------------------------------------------------------------------
+1. **Login** → get token  
+2. **Set Authorization** → Bearer Token  
+3. Test endpoints normally  
 
-## 🧪 Testing with Postman
+---
 
-1.  Create a new request.
-2.  Select **POST** and enter the login endpoint.
-3.  Add raw JSON body:
+## 📤 File Upload
 
-```{=html}
-<!-- -->
+### POST `/api/upload`
+- Go to Body → form-data
+- Key: `file` (type: file)
+- Upload image/file
+
+---
+
+## 🔌 Socket.io Test
+
+Create `testSocket.js`:
+
+```js
+const io = require("socket.io-client");
+const socket = io("http://localhost:5000");
+
+socket.on("connect", () => {
+  console.log("Connected:", socket.id);
+  socket.emit("sendMessage", "Hello!");
+});
+
+socket.on("messageFromServer", (msg) => {
+  console.log("Server:", msg);
+});
 ```
-    {
-      "email": "example@example.com",
-      "password": "123456"
-    }
-
-4.  Copy the returned **JWT token**.
-5.  For protected routes, set Authorization:
-    -   Type: **Bearer Token**
-    -   Paste your token
-6.  Test CRUD operations on notes.
-
-------------------------------------------------------------------------
-
-## 🖼 File Upload Example
-
-Use this endpoint in Postman:
-
-    POST /api/upload
-
--   Go to **Body**
--   Select **form-data**
--   Add key: `file` → type = *file*
--   Upload any image
--   Submit
-
-------------------------------------------------------------------------
-
-## 🔌 Socket.io Testing
-
-To test the WebSocket connection:
-
-### Create `testSocket.js`
-
-    const io = require("socket.io-client");
-    const socket = io("http://localhost:5000");
-
-    socket.on("connect", () => {
-      console.log("Connected to server:", socket.id);
-      socket.emit("sendMessage", "Hello server!");
-    });
-
-    socket.on("messageFromServer", (msg) => {
-      console.log("Server message:", msg);
-    });
 
 Run:
+```bash
+node testSocket.js
+```
 
-    node testSocket.js
-
-------------------------------------------------------------------------
-
-## 🔒 .gitignore Setup
-
-    node_modules/
-    .env
-    /uploads/
-
-------------------------------------------------------------------------
-
-## ✨ Technologies Used
-
--   **Node.js**
--   **Express.js**
--   **MongoDB + Mongoose**
--   **Socket.io**
--   **Multer**
--   **JWT Authentication**
-
-------------------------------------------------------------------------
+---
 
 ## 📜 License
-
 MIT License © 2026 Vephla Productivity Suite

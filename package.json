@@ -1,0 +1,25 @@
+{
+  "name": "vephla-productivity-suite",
+  "version": "1.0.0",
+  "description": "This project is a Node.js + Express-based backend API providing user authentication, real-time socket communication, file upload handling, and RESTful endpoints. It is built following MVC folder structure for scalability and easy maintenance.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OlorunfemiSunday/vephla-productivity-suite.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/OlorunfemiSunday/vephla-productivity-suite/issues"
+  },
+  "homepage": "https://github.com/OlorunfemiSunday/vephla-productivity-suite#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
