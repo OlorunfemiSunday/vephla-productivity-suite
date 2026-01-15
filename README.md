@@ -157,8 +157,5 @@ Run:
 ```bash
 node testSocket.js
 ```
-
----
-
-## 📜 License
-MIT License © 2026 Vephla Productivity Suite
+ 
+ 
